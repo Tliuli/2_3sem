@@ -93,6 +93,21 @@ void clean_list(list* cur_list) {
 	}
 }
 
+void pop_list_front(list* cur_list) {
+	if (is_list_empty(cur_list)) {
+		return;
+	}
+	list_item* p_tmp = cur_list->first; // в качестве временного берем текущий первый
+	cur_list->first = p_tmp->next;
+	if (p_tmp->next == nullptr) {
+		cur_list->last == nullptr;
+	}
+	else {
+		p_tmp->next->previous = nullptr;
+	}
+	delete p_tmp;
+}
+
 void clean_list_back(list* cur_list) {
 	list_item* p_tmp = cur_list->last; // в качестве временного берем текущий последний
 	while (p_tmp != nullptr) { // и пока не дойдем до нулевого указателя, означающего конец
@@ -118,6 +133,9 @@ int main()
 	print_list(&l);
 	cout << "\n";
 	print_list_back(&l); // печать в обратном порядке - success
+	pop_list_front(&l);
+	print_list(&l);
+
 	//cout << is_list_empty(&l) << std::endl; ан-о
 	cout << l.first; // if add ->data , то будет выводить первое значение, а не адрес
 	clean_list_back(&l);
