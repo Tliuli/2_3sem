@@ -95,21 +95,6 @@ void clean_list(list* cur_list) {
 	p_tmp = nullptr;
 }
 
-void pop_list_front(list* cur_list) {
-	if (is_list_empty(cur_list)) {
-		return;
-	}
-	list_item* p_tmp = cur_list->first; // в качестве временного берем текущий первый
-	cur_list->first = p_tmp->next;
-	if (p_tmp->next == nullptr) {
-		cur_list->last == nullptr;
-	}
-	else {
-		p_tmp->next->previous = nullptr;
-	}
-	delete p_tmp;
-}
-
 void clean_list_back(list* cur_list) {
 	list_item* p_tmp = cur_list->last; // в качестве временного берем текущий последний
 	while (p_tmp->previous != nullptr) { // и пока не дойдем до нулевого указателя, означающего конец
@@ -118,6 +103,21 @@ void clean_list_back(list* cur_list) {
 	}
 	delete p_tmp;
 	p_tmp = nullptr;
+}
+
+void pop_list_front(list* cur_list) { //удалили 1! элемент из начала
+	if (is_list_empty(cur_list)) {
+		return;
+	}
+	list_item* p_tmp = cur_list->first; // в качестве временного берем текущий первый
+	cur_list->first = p_tmp->next; // теперь первый элемент - тот, который следующий после времененного
+	if (p_tmp->next == nullptr) { //если перешли на нулевой 
+		cur_list->last == nullptr;
+	}
+	else {
+		p_tmp->next->previous = nullptr; //он теперь первый, ссылку на предыдущий зануляем
+	}
+	delete p_tmp; //удаляем взятый временный элемент - т.е. тот, который до махинаций был первым
 }
 
 int main()
@@ -145,7 +145,6 @@ int main()
 	cout << l.first << "\n"; // if add ->data , то будет выводить первое значение, а не адрес
 	//clean_list(&l);
 	clean_list_back(&l);
-	cout << "check clean both\n";
 	//print_list(&l);
 	cout << "\n";
 	//print_list_back(&l);
