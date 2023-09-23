@@ -1,5 +1,6 @@
+<<<<<<< HEAD
 1line
 2line
-3line
-4 line
+4 linе
 5 line
+>>>>>>> Task-3_conflict
