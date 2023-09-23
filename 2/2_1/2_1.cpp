@@ -87,22 +87,27 @@ void print_list_back(list* cur_list) {
 
 void clean_list(list* cur_list) {
 	list_item* p_tmp = cur_list->first; // в качестве временного берем текущий первый
-	while (p_tmp != nullptr) { // и пока не дойдем до нулевого указателя, означающего конец
+	while (p_tmp->next != nullptr) { // и пока не дойдем до нулевого указателя, означающего конец
 		p_tmp = p_tmp->next; // меняем временный на его следующий
 		delete p_tmp->previous; //удаляем предыдущий элемент
 	}
+	delete p_tmp;
+	p_tmp = nullptr;
 }
 
 void clean_list_back(list* cur_list) {
 	list_item* p_tmp = cur_list->last; // в качестве временного берем текущий последний
-	while (p_tmp != nullptr) { // и пока не дойдем до нулевого указателя, означающего конец
+	while (p_tmp->previous != nullptr) { // и пока не дойдем до нулевого указателя, означающего конец
 		p_tmp = p_tmp->previous; // меняем временный на его предыдущий - задом наперед идем
 		delete p_tmp->next; //удаляем следующий элемент
 	}
+	delete p_tmp;
+	p_tmp = nullptr;
 }
 
 int main()
 {
+	setlocale(LC_ALL, "Russian");
 	list l;
 	//cout << is_list_empty(&l) << std::endl; //печатаем, верно ли, что список пустой - ответ - true - 1. Создаем первый элемент списка, нулевой
 	//прошлую строчку спокойно можем опустить
@@ -119,12 +124,13 @@ int main()
 	cout << "\n";
 	print_list_back(&l); // печать в обратном порядке - success
 	//cout << is_list_empty(&l) << std::endl; ан-о
-	cout << l.first; // if add ->data , то будет выводить первое значение, а не адрес
+	cout << l.first << "\n"; // if add ->data , то будет выводить первое значение, а не адрес
+	//clean_list(&l);
 	clean_list_back(&l);
-	//check clean both
-	print_list(&l);
+	cout << "check clean both\n";
+	//print_list(&l);
 	cout << "\n";
-	print_list_back(&l);
+	//print_list_back(&l);
 	return 0;
 }
 
