@@ -105,7 +105,7 @@ void clean_list_back(list* cur_list) {
 	p_tmp = nullptr;
 }
 
-void pop_list_front(list* cur_list) { //удалили 1! элемент из начала
+void pop_list_front(list* cur_list) { //удаляем 1! элемент из начала
 	if (is_list_empty(cur_list)) {
 		return;
 	}
@@ -120,10 +120,28 @@ void pop_list_front(list* cur_list) { //удалили 1! элемент из н
 	delete p_tmp; //удаляем взятый временный элемент - т.е. тот, который до махинаций был первым
 }
 
+void pop_list_back(list* cur_list) { //удаляем 1! элемент из начала
+	if (is_list_empty(cur_list)) {
+		return;
+	}
+	list_item* p_tmp = cur_list->last; // в качестве временного берем текущий последний 
+	cur_list->last = p_tmp->previous; // теперь последний элемент - тот, который предыдущий после времененного
+	if (p_tmp->previous == nullptr) { //если перешли на нулевой 
+		cur_list->first == nullptr;
+	}
+	else {
+		p_tmp->previous->next = nullptr; //он теперь последний, ссылку на следующий зануляем
+	}
+	delete p_tmp; //удаляем взятый временный элемент - т.е. тот, который до махинаций был последний
+}
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 	list l;
+
+	
+	
 	//cout << is_list_empty(&l) << std::endl; //печатаем, верно ли, что список пустой - ответ - true - 1. Создаем первый элемент списка, нулевой
 	//прошлую строчку спокойно можем опустить
 	//pushback(&l, 28); unneed for check
@@ -135,18 +153,26 @@ int main()
 	pushfront(&l, 4);
 	pushfront(&l, 5);
 
+	list_item *p_cur = l.first; // это ссылка на первый элемента списка, но она не меняется, когда что-то производим с этим элементом списка Why.
+	//т.к. она указывает на ту ячейку памяти, куда и указатель l.first, а когда меняется первый элемент, указатель l.first мы переносим, а вот этот - нет.
+	//и тогда нужно его дополнительно менять в каждой функции? а попроще никак?
+	cout << l.first << "\n"; // if add ->data , то будет выводить первое значение, а не адрес
+	cout << l.first->data << "\n"; // if add ->data , то будет выводить первое значение, а не адрес
+	cout << p_cur << endl;
+
 	print_list(&l);
+
 	cout << "\n";
-	print_list_back(&l); // печать в обратном порядке - success
-	pop_list_front(&l);
+	//print_list_back(&l); // печать в обратном порядке - success
+	//pop_list_front(&l);
+	pop_list_back(&l);
 	print_list(&l);
 
 	//cout << is_list_empty(&l) << std::endl; ан-о
-	cout << l.first << "\n"; // if add ->data , то будет выводить первое значение, а не адрес
 	//clean_list(&l);
 	clean_list_back(&l);
 	//print_list(&l);
-	cout << "\n";
+	//cout << "\n";
 	//print_list_back(&l);
 	return 0;
 }
