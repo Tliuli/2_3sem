@@ -56,12 +56,11 @@ void pushback(list* cur_list, int data) {
 	cur_list->last = p_tmp; // переносим указатель на последний элемент на наш временный. Временный теперь - последний.
 }
 
-void pushfront(list* cur_list, int data, list_item* p) {
+void pushfront(list* cur_list, int data) {
 	list_item* p_tmp = new list_item(data); // для указателя на временную переменную выделяем память, содержащую добавляемое значение
 	if (is_list_empty(cur_list)) { // if true
 		cur_list->first = p_tmp; // то указатель на текущий элемент_первый указывает на наше временное значение
 		cur_list->last = p_tmp; // то указатель на текущий элемент_последний указывает на наше временное значение
-		p = p_tmp;
 		return;
 	} // if false, то сразу переходим к след. шагу
 	cur_list->first->previous = p_tmp; // то указатель текущего_первого элемента на предыдущий пуказывает на наше временное значение
