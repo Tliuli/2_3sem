@@ -1,8 +1,6 @@
 ﻿#include <iostream>
 using namespace std;
 
-//ascend_rem_val
-
 bool ascending(const int& v1, const int& v2) {
 	if (v1 > v2)
 		return true;
@@ -48,14 +46,65 @@ void bubblesort(int* l, int* r) {
 	}
 }
 
+void merge(int list[], int start, int end, int mid)
+{
+	int mergedList[8];
+	int i, j, k;
+	i = start;
+	k = start;
+	j = mid + 1;
+
+	while (i <= mid && j <= end) {
+		if (list[i] < list[j]) {
+			mergedList[k] = list[i];
+			k++;
+			i++;
+		}
+		else {
+			mergedList[k] = list[j];
+			k++;
+			j++;
+		}
+	}
+
+	while (i <= mid) {
+		mergedList[k] = list[i];
+		k++;
+		i++;
+	}
+
+	while (j <= end) {
+		mergedList[k] = list[j];
+		k++;
+		j++;
+	}
+
+	for (i = start; i < k; i++) {
+		list[i] = mergedList[i];
+	}
+}
+
+void mergeSort(int list[], int start, int end)
+{
+	int mid;
+	if (start < end) {
+		mid = (start + end) / 2;
+		mergeSort(list, start, mid);
+		mergeSort(list, mid + 1, end);
+		merge(list, start, end, mid);
+	}
+}
+
 
 int main()
 {
 	//setlocale(LC_ALL, "Russian");  // чтобы русский язык при печати верно выводился
-	int arr[] = { 5, 1, 4000, 2, 8 };
-	bubblesort(&arr[0], &arr[4]);
+	int A[] = { 5, 1, 4000, 2, 8 };
+	bool (*A_links[])(const int& v1, const int& v2) = { ascending, descending, ascend_rem_val }; // массив указателей на функции
+	bubblesort(&A[0], &A[4]);
+	//mergeSort(arr, 0, 4);
 	for (int i = 0; i < 5; i++) {
-		cout << arr[i] << " ";
+		cout << A[i] << " ";
 	}
 }
 
