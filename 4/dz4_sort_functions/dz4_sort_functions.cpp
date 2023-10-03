@@ -20,7 +20,7 @@ bool descending(const int& v1, const int& v2) {
 bool ascend_rem_val(const int& v1, const int& v2) {
 	if ((v1 % 1000) > (v2 % 1000))
 		return true;
-	else if ((v1 % 1000) < (v2 % 1000)) {
+	else if ((v1 % 1000) < (v2 % 1000)) { 
 		return false;
 	}
 	else {
@@ -37,7 +37,7 @@ void bubblesort(int* l, int* r) {
 	while (flag) {
 		flag = false;
 		for (int* i = l; i + 1 <= r; i++) {
-			if (ascend_rem_val(*i, *(i + 1))) {
+			if (ascending(*i, *(i + 1))) { // компаратор
 				swap(*i, *(i + 1));
 				flag = true;
 			}
@@ -55,7 +55,7 @@ void merge(int list[], int start, int end, int mid)
 	j = mid + 1;
 
 	while (i <= mid && j <= end) {
-		if (list[i] < list[j]) {
+		if (!ascending(list[i], list[j])) { // компаратор + отрицание для совпадения с пузырем
 			mergedList[k] = list[i];
 			k++;
 			i++;
@@ -98,13 +98,21 @@ void mergeSort(int list[], int start, int end)
 
 int main()
 {
-	//setlocale(LC_ALL, "Russian");  // чтобы русский язык при печати верно выводился
+	setlocale(LC_ALL, "Russian");  // чтобы русский язык при печати верно выводился
 	int A[] = { 5, 1, 4000, 2, 8 };
-	bool (*A_links[])(const int& v1, const int& v2) = { ascending, descending, ascend_rem_val }; // массив указателей на функции
+	int B[] = { 5, 1, 4000, 2, 8 };
+	//bool (*A_links[])(const int& v1, const int& v2) = { ascending, descending, ascend_rem_val }; // массив указателей на функции
+	//bool* p = A_links[0];
+	cout << "Пузырь" << endl;
 	bubblesort(&A[0], &A[4]);
-	//mergeSort(arr, 0, 4);
+	cout << "Слияние" << endl;
+	mergeSort(B, 0, 4);
 	for (int i = 0; i < 5; i++) {
 		cout << A[i] << " ";
+	}
+	cout << endl;
+	for (int i = 0; i < 5; i++) {
+		cout << B[i] << " ";
 	}
 }
 
