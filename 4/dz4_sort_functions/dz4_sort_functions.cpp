@@ -34,7 +34,7 @@ bool ascend_rem_val(const int& v1, const int& v2) {
 	}
 }
 
-void bubblesort(int* l, int* r) {
+void bubblesort(int* l, int* r, bool(*list[])(const int&, const int&)) {
 	int i = 0;
 	int sz = r - l;
 	if (sz <= 1) 
@@ -113,11 +113,11 @@ int main()
 		A[i] = rand() % (101);
 	}
 
-	//bool (*A_links[])(const int& v1, const int& v2) = { ascending, descending, ascend_rem_val }; // массив указателей на функции
+	bool (*A_links[])(const int& v1, const int& v2) = { ascending, descending, ascend_rem_val }; // массив указателей на функции
 	//bool* p = A_links;
 
 	cout << "Пузырь" << endl;
-	bubblesort(&A[0], &A[n - 1]);
+	bubblesort(&A[0], &A[n - 1], A_links);
 	//cout << "Слияние" << endl;
 	//mergeSort(A, 0, n - 1);
 	/*for (int i = 0; i < n; i++) {
