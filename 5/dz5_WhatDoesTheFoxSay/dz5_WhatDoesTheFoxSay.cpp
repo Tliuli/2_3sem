@@ -26,9 +26,5 @@ void animal_sound(animals animal){
 int main()
 {
 	setlocale(LC_ALL, "Russian");  // чтобы русский язык при печати верно выводился
-	//animals input;
-	//cout << "Введите животное из списка: dog, cat, chicken" << endl;
-	//cin >> s;
-	animals an = cat; // с консоли если вводить, перевод в тип animals сложнее...
-	animal_sound(an);
+	animal_sound(cat); // с консоли если вводить, перевод в тип animals сложнее...
 }
