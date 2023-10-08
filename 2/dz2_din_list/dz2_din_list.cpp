@@ -13,11 +13,12 @@ struct list_item {
 	list_item* next; // Это поле хранит указатель на следующий элемент
 	list_item* previous; //Это поле - заготовка для превращения списка в двусвязный
 
-	//Это конструктор,
-	//Он нужен для инициализации элемента списка
-	//Пока не важно как это рабоает, используйте по аналогии с вызовом в 46 строке
+
 	list_item(int _data) : data(_data), next(nullptr), previous(nullptr) {}; // где nullptr - нулевой указатель, в Си use-ся NULL
 
+	~list_item() {
+		cout << " Деструктор list_item" << endl;
+	}
 };
 
 
@@ -81,38 +82,6 @@ struct list {
 			p = p_tmp;
 			return p;
 		}
-	}
-
-	list_item* clean_list(list_item* p) {
-		list_item* p_tmp = first; // в качестве временного берем текущий первый
-		while (p_tmp->next != nullptr) { // и пока не дойдем до нулевого указателя, означающего конец
-			p_tmp = p_tmp->next; // меняем временный на его следующий
-			//cout << p_tmp->previous << endl;
-			delete p_tmp->previous; //удаляем предыдущий элемент <- Ничего не делает
-			//cout << p_tmp->previous;
-			//cout << " del ";
-			//print_list();
-		}
-		delete p_tmp;
-		p = p_tmp = nullptr;
-		flag = true;
-		//cout << "del ";
-		//print_list();
-		return p;
-	}
-
-	list_item* clean_list_back(list_item* p) {
-		list_item* p_tmp = last; // в качестве временного берем текущий последний
-		while (p_tmp->previous != nullptr) { // и пока не дойдем до нулевого указателя, означающего конец
-			p_tmp = p_tmp->previous; // меняем временный на его предыдущий - задом наперед идем
-			delete p_tmp->next; //удаляем следующий элемент <- Ничего не делает
-		}
-		delete p_tmp;
-		p = p_tmp = nullptr;
-		flag = true;
-		//cout << "del_back ";
-		//print_list();
-		return p;
 	}
 
 	list_item* pop_list_front(list_item* p) { //удаляем 1! элемент из начала
@@ -206,25 +175,26 @@ struct list {
 		return p;
 	}
 
-	list_item* divide_list_cur(list_item* p, list_item* p_1, list_item* p_2, list& l1, list& l2) {
-		list_item* p_tmp = last;
-		while (p_tmp != p) {
-			p_2 = l2.pushfront(p_tmp->data, p_2);
-			p_tmp = p_tmp->previous;
-		}
-		p_tmp = first;
-		while (p_tmp != p->next) {
-			p_1 = l1.pushback(p_tmp->data, p_1);
-			p_tmp = p_tmp->next;
-		}
-		cout << endl << "ВЫВОД ОШИБКИ" << endl; //не совсем ошибка, как поняла, особенность C\С++ из-за использования ассемблера при компиляции; т.е. вовзврат состоит только из одного элемента.
-		cout << "p_cur1 в функции перед выходом " << p_1 << endl;
-		cout << "p_cur2 в функции перед выходом " << p_2 << endl;
-		return p_1, p_2;
+	void divide_list_cur(list_item* p, list_item* p_2, list& l2) {
+		l2.first = p->next;
+		l2.last = last;
+		last = p;
+		p_2 = l2.first;
+		
+		l2.first->previous = nullptr;
+		last->next = nullptr;
 	}
 
 	~list(){
-		cout << "Деструктор list" << endl;
+		list_item* p_tmp = first; 
+		while ( p_tmp->next != nullptr) { 
+			cout << p_tmp->data << " "; 
+			p_tmp = p_tmp->next; 
+			delete p_tmp->previous;
+		}
+		cout << p_tmp->data << " ";
+		delete p_tmp;
+		cout << "Деструктор list" << endl << endl;
 	}
 };
 
@@ -254,7 +224,6 @@ int main()
 	cout << "Имеем в наличии указатель на выбранный элемент - текущий - который по умолчанию указывает на первый элемент в списке." << endl;
 	cout << "Вернем значение, на которое ссылается указатель - " << p_cur->data << endl;
 	cout << "Умеем удалять элементы из конца и начала списка - " << endl;
-	cout << p_cur->data << endl;
 	p_cur = l.pop_list_back(p_cur);
 	//cout << p_cur->data << endl;
 	p_cur = l.pop_list_front(p_cur);
@@ -281,29 +250,16 @@ int main()
 	cout << "...и влево - " << endl;
 	p_cur = l.move_cur(p_cur, 0);
 	cout << p_cur->data << endl;
-	cout << "Также есть метод для разделения списка на две части по текущему элементу. Однако работа продолжается только с частью, включащей элемент - левой." << endl;
-	list l1;
+	cout << "Также есть метод для разделения списка на две части по текущему элементу. Получаем два списка:" << endl;
 	list l2;
-	list_item* p_cur1 = l1.first;
 	list_item* p_cur2 = l2.first;
-	p_cur1, p_cur2 = l.divide_list_cur(p_cur, p_cur1, p_cur2, l1, l2); // в принципе, раз так, то можем получить значение как p_curi = li.first
-	cout << "p_cur1 после выхода из функции " << p_cur1 << endl;
-	cout << "p_cur2 после выхода из функции " << p_cur2 << endl;
-	cout << "-//-" << endl;
-	cout << endl << "l1" << endl;
-	l1.print_list();
-	cout << "l2" << endl;
+	l.divide_list_cur(p_cur, p_cur2, l2);
+	cout << "l - ";
+	l.print_list();
+	cout << "l2 - ";
 	l2.print_list();
-	p_cur1 = l1.first;
-	p_cur2 = l2.first;
-	cout << "И можем удалять список - не можем" << endl;
-	//p_cur = l.clean_list(p_cur);
-	//l.print_list();
-	//p_cur1 = l1.clean_list(p_cur1);
-	//p_cur2 = l2.clean_list_back(p_cur2);
-	//l1.print_list();
-	//l2.print_list();
-	
+	cout << "При выходе из main запускается деструктор, последовательно удаляющий все элементы списков." << endl;
+
 	return 0;
 }
 
