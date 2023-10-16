@@ -1,7 +1,5 @@
 #pragma once
 #include <iostream>
-#include <stdlib.h> // for exit() - завершение вызывающего процесса
-using namespace std;
 class Fraction
 {
 public:

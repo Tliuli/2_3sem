@@ -5,10 +5,14 @@
 
 int main()
 {
-	Fraction a(3, 1);
-    std::cout << "Hello World!\n";
-	cout << a.numerator << " " << a.denominator << endl;
-	cout << a << endl;
+	Fraction a(6, 3);
+	Fraction b(1, 4);
+	//Fraction c(0, 1);
+	std::cout << "a = " << a << ", b = " << b << std::endl;
+	std::cout << "a + b = " << a + b  << std::endl;
+	std::cout << "a - b = " << a - b << std::endl;
+	std::cout << "a * b = " << a * b << std::endl;
+	std::cout << "a / b = " << a / b << std::endl;
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
