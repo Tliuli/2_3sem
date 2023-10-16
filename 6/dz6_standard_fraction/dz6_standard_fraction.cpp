@@ -7,7 +7,6 @@ int main()
 {
 	Fraction a(6, 3);
 	Fraction b(1, 4);
-	//Fraction c(0, 1);
 	std::cout << "a = " << a << ", b = " << b << std::endl;
 	std::cout << "a + b = " << a + b  << std::endl;
 	std::cout << "a - b = " << a - b << std::endl;
