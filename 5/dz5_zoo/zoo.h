@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string> //for chars array
 using namespace std;
+
 enum animals { tiger = 0, wolf, snake };
 
 struct zoo {
