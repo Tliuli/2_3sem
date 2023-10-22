@@ -5,7 +5,8 @@ class Fraction
 public:
 	int numerator; //числитель
 	int denominator; //знаменатель
-
+	Fraction(); //
+	Fraction(int n); // 
 	Fraction(int n, int d); // конструктор
 
 	// Перегружаем операторы основных операций
@@ -26,5 +27,9 @@ public:
 	//friend, т.к. к потоку нет доступа у нас, он не может быть членом класса -> явл. вн. объектом -> должно быть определено его отношение к классу
 
 	~Fraction();
+
+	void f(int x = 5, int y = 7);
 };
+
+
 

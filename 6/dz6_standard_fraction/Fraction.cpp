@@ -1,8 +1,25 @@
 #include <stdlib.h> // for exit() - завершение вызывающего процесса
 #include "Fraction.h"
 
+Fraction::Fraction()
+{
+	std::cout << "без аргументов" << std::endl;
+	numerator = 0;
+	denominator = 1;
+	
+}
+
+Fraction::Fraction(int n)
+{
+	numerator = 8;
+	denominator = 1;
+	std::cout << "с 1 аргументом" << std::endl;
+}
+
 Fraction::Fraction(int n, int d)
 {
+	std::cout << "wafzgvzsg" << std::endl;
+	std::cout << "1r" << n << d << " " << numerator << std::endl;
 	if (d == 0) {
 		std::cerr << "It is not allowed for denominator to be equal 0." << std::endl; // cerr - ~поток вывода сообщений об ошибках
 		exit(0); // exit - завершение вызывающего процесса
@@ -13,6 +30,7 @@ Fraction::Fraction(int n, int d)
 		numerator = n;
 		denominator = d;
 	}
+	std::cout << "2r" << n << d << numerator << std::endl;
 }
 
 Fraction Fraction::operator+(const Fraction& fraction)
@@ -80,4 +98,8 @@ std::ostream& operator<<(std::ostream& strm, const Fraction& a)
 		strm << a.numerator << "/" << a.denominator;
 	}
 	return strm;
+}
+
+void Fraction::f(int x, int y) {
+	std::cout << "x = " << x << " , y = " << y << std::endl;
 }

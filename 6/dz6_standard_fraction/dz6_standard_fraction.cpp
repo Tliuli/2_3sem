@@ -5,13 +5,20 @@
 
 int main()
 {
-	Fraction a(6, 3);
+	setlocale(LC_ALL, "Russian");  // чтобы русский язык при печати верно выводился
+	/*Fraction d(6, 9);
+	d.f(1, 2);*/
+	Fraction e();
+	/*Fraction a(6, 3);
 	Fraction b(1, 4);
 	std::cout << "a = " << a << ", b = " << b << std::endl;
 	std::cout << "a + b = " << a + b  << std::endl;
 	std::cout << "a - b = " << a - b << std::endl;
 	std::cout << "a * b = " << a * b << std::endl;
 	std::cout << "a / b = " << a / b << std::endl;
+	//std::cout << "a + 1 = " << a + 1 << std::endl;*/
+	Fraction c();
+	//std::cout << "c = " << b.numerator <<  std::endl;
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
