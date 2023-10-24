@@ -1,25 +1,8 @@
 #include <stdlib.h> // for exit() - завершение вызывающего процесса
 #include "Fraction.h"
 
-Fraction::Fraction()
-{
-	std::cout << "без аргументов" << std::endl;
-	numerator = 0;
-	denominator = 1;
-	
-}
-
-Fraction::Fraction(int n)
-{
-	numerator = 8;
-	denominator = 1;
-	std::cout << "с 1 аргументом" << std::endl;
-}
-
 Fraction::Fraction(int n, int d)
 {
-	std::cout << "wafzgvzsg" << std::endl;
-	std::cout << "1r" << n << d << " " << numerator << std::endl;
 	if (d == 0) {
 		std::cerr << "It is not allowed for denominator to be equal 0." << std::endl; // cerr - ~поток вывода сообщений об ошибках
 		exit(0); // exit - завершение вызывающего процесса
@@ -30,33 +13,32 @@ Fraction::Fraction(int n, int d)
 		numerator = n;
 		denominator = d;
 	}
-	std::cout << "2r" << n << d << numerator << std::endl;
 }
 
-Fraction Fraction::operator+(const Fraction& fraction)
+Fraction operator+(const Fraction& l_fraction, const Fraction& r_fraction)
 {
-	Fraction tmp(numerator * fraction.denominator + denominator * fraction.numerator, denominator * fraction.denominator);
+	Fraction tmp(l_fraction.numerator * r_fraction.denominator + l_fraction.denominator * r_fraction.numerator, l_fraction.denominator * r_fraction.denominator);
 	tmp.reduce();
 	return tmp;
 }
 
-Fraction Fraction::operator-(const Fraction& fraction)
+Fraction operator-(const Fraction& l_fraction, const Fraction& r_fraction)
 {
-	Fraction tmp(numerator * fraction.denominator - denominator * fraction.numerator, denominator * fraction.denominator);
+	Fraction tmp(l_fraction.numerator * r_fraction.denominator - l_fraction.denominator * r_fraction.numerator, l_fraction.denominator * r_fraction.denominator);
 	tmp.reduce();
 	return tmp;
 }
 
-Fraction Fraction::operator*(const Fraction& fraction)
+Fraction operator*(const Fraction& l_fraction, const Fraction& r_fraction)
 {
-	Fraction tmp(numerator * fraction.numerator, denominator * fraction.denominator);
+	Fraction tmp(l_fraction.numerator * r_fraction.numerator, l_fraction.denominator * r_fraction.denominator);
 	tmp.reduce();
 	return tmp;
 }
 
-Fraction Fraction::operator/(const Fraction& fraction)
+Fraction operator/(const Fraction& l_fraction, const Fraction& r_fraction)
 {
-	Fraction tmp(numerator * fraction.denominator, denominator * fraction.numerator);
+	Fraction tmp(l_fraction.numerator * r_fraction.denominator, l_fraction.denominator * r_fraction.numerator);
 	tmp.reduce();
 	return tmp;
 }
@@ -91,6 +73,7 @@ Fraction::~Fraction()
 
 std::ostream& operator<<(std::ostream& strm, const Fraction& a)
 {
+	//std::cout << "We are here ";
 	if (a.denominator == 1) {
 		strm << a.numerator;
 	}
@@ -98,8 +81,4 @@ std::ostream& operator<<(std::ostream& strm, const Fraction& a)
 		strm << a.numerator << "/" << a.denominator;
 	}
 	return strm;
-}
-
-void Fraction::f(int x, int y) {
-	std::cout << "x = " << x << " , y = " << y << std::endl;
 }
