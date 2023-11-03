@@ -2,14 +2,15 @@
 //
 
 #include "Fraction.h"
-#include <typeinfo.h> 
 
 int main()
 {
-	setlocale(LC_ALL, "Russian");  // чтобы русский язык при печати верно выводился
-	Fraction a(6, 3);
+	Fraction a(6, 4);
 	//Fraction b(1, 4);
 	int b = 3;
+	double c = 7.2;
+	std::cout << a * b << std::endl;
+	std::cout << a * c << std::endl;
 	std::cout << "a = " << a << ", b = " << b << std::endl;
 	std::cout << "a + b = " << a + b  << std::endl;
 	std::cout << "a - b = " << a - b << std::endl;
